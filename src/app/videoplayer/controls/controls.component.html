@@ -1,0 +1,29 @@
+<div class="row" style="font-size: 30px; color:rgb(10, 132, 136)">
+    <div class="col" ngbTooltip="play">
+      <span id="play" placement="bottom" class="glyphicon glyphicon-play" (click)="play()"></span>
+    </div>
+    <div class="col">
+      <span id="pause" class="glyphicon glyphicon-pause" style="color:rgb(119, 175, 177)" (click)="pause()"></span>
+    </div>
+    <div class="col">
+      <span id="stop" class="glyphicon glyphicon-stop" (click)="stop()"></span>
+    </div>
+    <div class="col">
+      <span class="glyphicon glyphicon-arrow-down" (click)="volumedown()"></span>
+    </div>
+    <div class="col">
+      <span class="glyphicon glyphicon-arrow-up" (click)="volumeup()"></span>
+    </div>
+    <div class="col">
+      <span id="togglemute" class="glyphicon glyphicon-volume-off" (click)="togglemute()"></span>
+    </div>
+    <div id="volumeon" class="col">
+      <span class="glyphicon glyphicon-repeat" (click)="reload()"></span>
+    </div>
+    <div class="col">
+      <span id="like" class="glyphicon glyphicon-thumbs-up"></span>
+    </div>
+    <div class="col">
+      <span id="dislike" class="glyphicon glyphicon-thumbs-down"></span>
+    </div>
+  </div>
