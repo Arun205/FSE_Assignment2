@@ -12,19 +12,25 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngAfterViewInit() {
-  }
+    const doc = (<any>window).document;
+    const playerApiScript = doc.createElement('script');
+    playerApiScript.type = 'text/javascript';
+    playerApiScript.src = 'https://www.youtube.com/iframe_api';
+    doc.body.appendChild(playerApiScript);
+    }
 
   ngOnInit() {
     (<any>window).onYouTubeIframeAPIReady = () => {
-      this.player = new (<any>window).YT.Player('ytplayer', {
-        height: '100%',
+      this.player = new (<any>window).YT.Player('ytPlayer', {
+        height: '500px',
         width: '100%',
-        videoId: 'ucHRFkDjUgg',
-        playerVars: {'autoplay': 1, 'rel': 0, 'controls': 2},
+        videoId: 'hHMyZR87VvQ',
+        playerVars: { 'autoplay': 0, 'rel': 0, 'controls': 2 },
         events: {
-          'onReady': () => {
+          'onReady': (event) => {
+            console.log('Player is ready');
           },
-          'onStateChange': () => {
+          'onStateChange': (event) => {
           }
         }
       });
