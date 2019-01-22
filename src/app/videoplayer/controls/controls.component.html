@@ -1,9 +1,9 @@
-<div class="row" style="font-size: 30px; color:rgb(10, 132, 136)">
+<div class="row" style="font-size: 30px; color:rgb(69, 104, 145)">
     <div class="col" ngbTooltip="play">
       <span id="play" placement="bottom" class="glyphicon glyphicon-play" (click)="play()"></span>
     </div>
     <div class="col">
-      <span id="pause" class="glyphicon glyphicon-pause" style="color:rgb(119, 175, 177)" (click)="pause()"></span>
+      <span id="pause" class="glyphicon glyphicon-pause" style="color:rgb(107, 154, 207)" (click)="pause()"></span>
     </div>
     <div class="col">
       <span id="stop" class="glyphicon glyphicon-stop" (click)="stop()"></span>
@@ -27,3 +27,12 @@
       <span id="dislike" class="glyphicon glyphicon-thumbs-down"></span>
     </div>
   </div>
+  <!-- <div>
+      <span class="glyphicon glyphicon-plus-sign float" routerLink="/addvideo" title="Add a video" placement="top"></span>
+  </div> -->
+
+  <span class="float" routerLink="/addvideo">
+    <button mat-fab matTooltip="Add a video" matTooltipClass="toolTip">
+        <mat-icon class="float-icon">video_call</mat-icon>
+      </button>
+  </span>
