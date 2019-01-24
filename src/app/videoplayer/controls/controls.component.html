@@ -1,11 +1,11 @@
 <div class="row" style="font-size: 30px; color:rgb(69, 104, 145); margin-left: 15px" >
     <div class="col" ngbTooltip="play">
-      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Play" matTooltipClass="toolTip" (click)="controls('play')">
+      <button mat-mini-fab [disabled]="!disablePause" style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Play" matTooltipClass="toolTip" (click)="controls('play')">
         <mat-icon>play_arrow</mat-icon>
       </button>
     </div>
     <div class="col">
-      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Pause" matTooltipClass="toolTip" (click)="controls('pause')">
+      <button mat-mini-fab [disabled]="disablePause" style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Pause" matTooltipClass="toolTip" (click)="controls('pause')">
         <mat-icon>pause</mat-icon>
       </button>
     </div>
@@ -24,9 +24,14 @@
         <mat-icon>volume_down</mat-icon>
       </button>
     </div>
-    <div class="col">
-      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Mute" matTooltipClass="toolTip" (click)="controls('mute')">
-        <mat-icon>volume_off</mat-icon>
+    <div *ngIf="!muted" class="col">
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Mute" matTooltipClass="toolTip" (click)="controls('togglemute')">
+        <mat-icon id="togglemute">volume_off</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="muted" class="col">
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Unmute" matTooltipClass="toolTip" (click)="controls('togglemute')">
+        <mat-icon id="togglemute">volume_mute</mat-icon>
       </button>
     </div>
     <div class="col">

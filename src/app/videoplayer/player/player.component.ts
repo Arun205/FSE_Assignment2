@@ -78,11 +78,12 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         break;
       case 'togglemute':
         this.muted = !this.muted;
+        console.log(this.muted);
         if (this.muted) {
-          this.player.mute();
+          // this.player.mute();
           this.openSnackBar('Muted');
         } else {
-          this.player.unmute();
+          // this.player.unmute();
           this.openSnackBar('Unmuted');
         }
     }
