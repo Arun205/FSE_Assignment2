@@ -9,7 +9,8 @@ export class VideoplayerComponent implements OnInit {
 
   public controlsEvent: string;
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit() {
   }

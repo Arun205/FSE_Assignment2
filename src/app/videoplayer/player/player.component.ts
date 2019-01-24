@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Dataservice } from '../dataservice.service';
 
 @Component({
@@ -9,10 +10,17 @@ import { Dataservice } from '../dataservice.service';
 export class PlayerComponent implements OnInit, AfterViewInit {
 
   @Input() controlsEvent;
+  dataSubscription: Subscription;
   player: any;
+  muted = false;
   i = 0;
 
-  constructor() { }
+  constructor(private dataservice: Dataservice) {
+    this.dataSubscription = this.dataservice.sharedDataEmitter.subscribe((data: any) => {
+      console.log(data);
+      this.controls(data);
+    });
+   }
 
   ngAfterViewInit() {
     const doc = (<any>window).document;
@@ -42,6 +50,45 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   }
 
+  controls(action) {
+    let currentVolume = 0;
+    let volume = 0
+    switch(action) {
+      case 'play':
+        this.player.playVideo();
+        break;
+      case 'pause':
+        this.player.pauseVideo();
+        break;
+      case 'stop':
+        this.player.stopVideo();
+        break;
+      case 'volumedown':
+        currentVolume = this.player.getVolume();
+        volume = 0;
+        if (currentVolume > 1) {
+          volume = currentVolume - 1;
+        }
+        this.player.setVolume(volume);
+        break;
+      case 'volumeup':
+        currentVolume = this.player.getVolume();
+        volume = 100;
+        if (currentVolume < 100) {
+          volume = currentVolume + 1;
+        }
+        this.player.setVolume(volume);
+        break;
+      case 'togglemute':
+        this.muted = !this.muted;
+        if (this.muted) {
+          this.player.mute();
+        } else {
+          this.player.unmute();
+        }
+    }
+  }
+
   stateChanged() {
     console.log('state changed');
     this.i = this.i + 1;
@@ -51,5 +98,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       this.player.setVolume(100);
     }
   }
+
 
 }

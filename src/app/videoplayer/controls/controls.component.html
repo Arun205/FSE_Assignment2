@@ -1,35 +1,32 @@
 <div class="row" style="font-size: 30px; color:rgb(69, 104, 145)">
     <div class="col" ngbTooltip="play">
-      <span id="play" placement="bottom" class="glyphicon glyphicon-play" (click)="play()"></span>
+      <span id="play" placement="bottom" class="glyphicon glyphicon-play" (click)="controls('play')"></span>
     </div>
     <div class="col">
-      <span id="pause" class="glyphicon glyphicon-pause" style="color:rgb(107, 154, 207)" (click)="pause()"></span>
+      <span id="pause" class="glyphicon glyphicon-pause" style="color:rgb(107, 154, 207)" (click)="controls('pause')"></span>
     </div>
     <div class="col">
-      <span id="stop" class="glyphicon glyphicon-stop" (click)="stop()"></span>
+      <span id="stop" class="glyphicon glyphicon-stop" (click)="controls('stop')"></span>
     </div>
     <div class="col">
-      <span class="glyphicon glyphicon-arrow-down" (click)="volumedown()"></span>
+      <span class="glyphicon glyphicon-arrow-down" (click)="controls('volumedown')"></span>
     </div>
     <div class="col">
-      <span class="glyphicon glyphicon-arrow-up" (click)="volumeup()"></span>
+      <span class="glyphicon glyphicon-arrow-up" (click)="controls('volumeup')"></span>
     </div>
     <div class="col">
-      <span id="togglemute" class="glyphicon glyphicon-volume-off" (click)="togglemute()"></span>
+      <span id="togglemute" class="glyphicon glyphicon-volume-off" (click)="controls('togglemute')"></span>
     </div>
     <div id="volumeon" class="col">
-      <span class="glyphicon glyphicon-repeat" (click)="reload()"></span>
+      <span class="glyphicon glyphicon-repeat" (click)="controls('reload')"></span>
     </div>
     <div class="col">
-      <span id="like" class="glyphicon glyphicon-thumbs-up"></span>
+      <span id="like" class="glyphicon glyphicon-thumbs-up" (click)="controls('like')"></span>
     </div>
     <div class="col">
-      <span id="dislike" class="glyphicon glyphicon-thumbs-down"></span>
+      <span id="dislike" class="glyphicon glyphicon-thumbs-down" (click)="controls('dislike')"></span>
     </div>
   </div>
-  <!-- <div>
-      <span class="glyphicon glyphicon-plus-sign float" routerLink="/addvideo" title="Add a video" placement="top"></span>
-  </div> -->
 
   <span class="float" routerLink="/addvideo">
     <button mat-fab matTooltip="Add a video" matTooltipClass="toolTip">
