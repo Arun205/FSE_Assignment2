@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatTooltipModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDividerModule,
-  MatCardModule } from '@angular/material'
+  MatCardModule, MatSnackBarModule } from '@angular/material';
+import { HttpModule }    from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { VideoplayerComponent } from './videoplayer/videoplayer.component';
-import { Dataservice } from './videoplayer/dataservice.service';
 import { PlayerComponent } from './videoplayer/player/player.component';
 import { ControlsComponent } from './videoplayer/controls/controls.component';
 import { PlaylistComponent } from './videoplayer/playlist/playlist.component';
@@ -28,6 +28,7 @@ import { HeaderComponent } from './header/header.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -37,9 +38,10 @@ import { HeaderComponent } from './header/header.component';
     MatInputModule,
     MatFormFieldModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule
   ],
-  providers: [Dataservice],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
