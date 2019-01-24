@@ -71,6 +71,9 @@ export class AddvideoComponent implements OnInit {
       .then((data) => {
         this.getVideodata();
       });
+      this.openSnackBar('Video Added!');
+      this.newvideotitle = '';
+      this.newvideourl = '';
     }
   }
 
