@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions} from '@angular/material';
 
 import { VideoData } from './../models/videodata.model';
@@ -43,33 +43,55 @@ export class AddvideoComponent implements OnInit {
       this.videos = data;
       console.log(this.videos);
       this.showVideoList = true;
-    })
+    });
   }
 
   addVideo() {
-    const options = new RequestOptions;
-    const newVideo = new VideoData;
-    if (this.videos.length == 0) {
-      newVideo.id = 0;
-    } else {
-      newVideo.id = this.videos[this.videos.length - 1].id + 1;
+    const validationPassed = this.validation();
+    if (validationPassed) {
+      const options = new RequestOptions;
+      const newVideo = new VideoData;
+      if (this.videos.length == 0) {
+        newVideo.id = 0;
+      } else {
+        newVideo.id = this.videos[this.videos.length - 1].id + 1;
+      }
+      newVideo.title = this.newvideotitle;
+      newVideo.url = this.newvideourl;
+      newVideo.status = 'Validation Pending';
+      newVideo.approved = false;
+      newVideo.likes = 0;
+      newVideo.unlikes = 0;
+      newVideo.currentStatus = '';
+      newVideo.exitTime = 0;
+      newVideo.edit = false;
+      this.http.post(this.allvideos_url, newVideo, options)
+      .toPromise()
+      .then((res) => res.json())
+      .then((data) => {
+        this.getVideodata();
+      });
     }
-    newVideo.title = this.newvideotitle;
-    newVideo.url = this.newvideourl;
-    newVideo.status = 'Validation Pending';
-    newVideo.approved = false;
-    newVideo.likes = 0;
-    newVideo.unlikes = 0;
-    newVideo.currentStatus = '';
-    newVideo.exitTime = 0;
-    newVideo.edit = false;
-    this.http.post(this.allvideos_url, newVideo, options)
-    .toPromise()
-    .then((res) => res.json())
-    .then((data) => {
-      this.getVideodata();
-    });
   }
+
+  validation() {
+    if (this.newvideotitle.trim().length == 0 && this.newvideourl.trim().length == 0) {
+      this.openSnackBar('Video title and url cannot left blank');
+      return false;
+    }
+    else {
+      if (this.newvideotitle.trim().length == 0) {
+        this.openSnackBar('Video title cannot left blank');
+        return false;
+      }
+      if (this.newvideourl.trim().length == 0) {
+        this.openSnackBar('Video url cannot left blank');
+        return false;
+      }
+    }
+    return true;
+  }
+
   enableEdit(video) {
     console.log(video);
     video.edit = true;
@@ -137,8 +159,9 @@ export class AddvideoComponent implements OnInit {
   }
 
   openSnackBar(message: string) {
-    this.snackBar.open(message, '', {
-      duration: 1500
-    });
+    const config = new MatSnackBarConfig();
+    config.duration = 1500;
+    config.panelClass = ['snackbarinfo'];
+    this.snackBar.open(message, '', config);
   }
 }
