@@ -1,8 +1,11 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class Dataservice {
     private sharedData: any;
+    sharedDataEmitter: EventEmitter<any> = new EventEmitter<any>();
 
     setSharedData(data: any) {
         this.sharedData = data;
@@ -11,4 +14,6 @@ export class Dataservice {
     getSharedData() {
         return this.sharedData;
     }
+
+
 }

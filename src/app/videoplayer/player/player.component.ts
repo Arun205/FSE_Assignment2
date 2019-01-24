@@ -1,4 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { Subscription } from 'rxjs';
 import { Dataservice } from '../dataservice.service';
 
 @Component({
@@ -9,47 +11,87 @@ import { Dataservice } from '../dataservice.service';
 export class PlayerComponent implements OnInit, AfterViewInit {
 
   @Input() controlsEvent;
+  dataSubscription: Subscription;
   player: any;
-  i = 0;
+  muted = false;
 
-  constructor() { }
+  constructor(private dataservice: Dataservice, private snackBar: MatSnackBar) {
+    this.dataSubscription = this.dataservice.sharedDataEmitter.subscribe((data: any) => {
+      console.log(data);
+      this.controls(data);
+    });
+   }
 
   ngAfterViewInit() {
-    const doc = (<any>window).document;
-    const playerApiScript = doc.createElement('script');
-    playerApiScript.type = 'text/javascript';
-    playerApiScript.src = 'https://www.youtube.com/iframe_api';
-    doc.body.appendChild(playerApiScript);
-    }
+      const doc = (<any>window).document;
+      const playerApiScript = doc.createElement('script');
+      playerApiScript.type = 'text/javascript';
+      playerApiScript.src = 'https://www.youtube.com/iframe_api';
+      doc.body.appendChild(playerApiScript);
+  }
 
   ngOnInit() {
-    (<any>window).onYouTubeIframeAPIReady = () => {
+    setTimeout((<any>window).onYouTubeIframeAPIReady = () => {
       this.player = new (<any>window).YT.Player('ytPlayer', {
-        height: '500px',
+        height: '100%',
         width: '100%',
         videoId: 'hHMyZR87VvQ',
-        playerVars: { 'autoplay': 0, 'rel': 0, 'controls': 0 },
-        events: {
-          'onReady': (event) => {
-            console.log('Player is ready');
-          },
-          'onStateChange': (event) => {
-            this.stateChanged();
-          }
-        }
-      });
-    };
+        playerVars: { 'autoplay': 0, 'rel': 0, 'controls': 0 }
+      })
+    },0);
 
   }
 
-  stateChanged() {
-    console.log('state changed');
-    this.i = this.i + 1;
-    console.log(this.i);
-    this.player.setVolume(0);
-    if ( this.i == 5) {
-      this.player.setVolume(100);
+  controls(action) {
+    let currentVolume = 0;
+    let volume = 0
+    switch(action) {
+      case 'play':
+        this.player.playVideo();
+        this.openSnackBar('Video Playing');
+        break;
+      case 'pause':
+        this.player.pauseVideo();
+        this.openSnackBar('Video Paused');
+        break;
+      case 'stop':
+        this.player.stopVideo();
+        this.openSnackBar('Video Stopped');
+        break;
+      case 'volumedown':
+        currentVolume = this.player.getVolume();
+        volume = 0;
+        if (currentVolume > 1) {
+          volume = currentVolume - 1;
+        }
+        this.player.setVolume(volume);
+        this.openSnackBar('Volume: ' + volume);
+        break;
+      case 'volumeup':
+        currentVolume = this.player.getVolume();
+        volume = 100;
+        if (currentVolume < 100) {
+          volume = currentVolume + 1;
+        }
+        this.player.setVolume(volume);
+        this.openSnackBar('Volume: ' + volume);
+        break;
+      case 'togglemute':
+        this.muted = !this.muted;
+        if (this.muted) {
+          this.player.mute();
+          this.openSnackBar('Muted');
+        } else {
+          this.player.unmute();
+          this.openSnackBar('Unmuted');
+        }
     }
   }
 
+  openSnackBar(message: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 1500;
+    config.panelClass = ['snackbarinfo'];
+    this.snackBar.open(message, '', config);
+  }
 }

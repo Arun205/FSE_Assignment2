@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Dataservice } from '../dataservice.service';
 
 @Component({
   selector: 'app-controls',
@@ -9,14 +10,14 @@ export class ControlsComponent implements OnInit {
 
   @Output() controlsEvent = new EventEmitter;
 
-  constructor() { }
+  constructor(private dataservice: Dataservice) { }
 
   ngOnInit() {
   }
 
-  play() {
-    this.controlsEvent.emit('controlEvent');
-    console.log('clicked');
+  controls(action) {
+    this.dataservice.setSharedData(action);
+    this.dataservice.sharedDataEmitter.emit(action);
   }
 
 }

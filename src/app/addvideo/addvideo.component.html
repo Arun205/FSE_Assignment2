@@ -7,16 +7,16 @@
     <br>
     <div>
       <mat-form-field style="width:75%">
-        <input matInput placeholder="Video Title">
+        <input matInput class="darkfont" placeholder="Video Title" [(ngModel)]="newvideotitle">
       </mat-form-field>
     </div>
     <div>
       <mat-form-field style="width:75%">
-        <input matInput placeholder="Video url">
+        <input matInput class="darkfont" placeholder="video id" type="url" [(ngModel)]="newvideourl">
       </mat-form-field>
     </div>
     <div>
-      <button mat-raised-button class="bgcolor lightfont">Add video</button>
+      <button mat-raised-button class="bgcolor lightfont" (click)="addVideo()">Add video</button>
     </div>
     <br>
     <mat-divider></mat-divider>
@@ -27,12 +27,62 @@
 
 <br>
 
-<div class="row">
+<div *ngIf="showVideoList" class="row">
   <div class="col-md-1">
   </div>
   <div class="col-md-10">
     <div style="font-size: 24px"><strong>My videos</strong></div>
-    <br>
+    <mat-card *ngFor="let video of videos; let i = index" class="bgcolor lightfont" style="margin-bottom: 10px">
+      <div class="row" style="margin-bottom: 10px">
+        <div class="col-md-1">
+          {{i+1}}
+        </div>
+        <div class="col-md-4">
+          <input *ngIf="video.edit" class="darkfont" placeholder="Title of the video" [(ngModel)]="video.title">
+          <div *ngIf="!video.edit" style="font-size: 20px">
+            {{video.title}}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <input *ngIf="video.edit" type="url" class="darkfont" placeholder="Url of the video" [(ngModel)]="video.url">
+          <div *ngIf="!video.edit" style="font-size: 14px" (click)="validateVideo(video)">
+            <a [attr.href]="video.url" target="_blank" class="lightfont">{{video.url}}</a>
+          </div>
+        </div>
+        <div class="col-md-3">
+          {{video.status}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7">
+        </div>
+        <div class="col-md-1">
+          <button *ngIf="video.edit" mat-mini-fab style="background-color:rgb(100, 175, 159)" (click)="updateVideo(video)" matTooltip="Save" matTooltipClass="toolTip">
+            <mat-icon>save</mat-icon>
+          </button>
+        </div>
+        <div class="col-md-1">
+          <button *ngIf="video.edit" mat-mini-fab style="background-color:rgb(163, 115, 115)" (click)="cancelUpdate(video)" matTooltip="Cancel" matTooltipClass="toolTip">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </div>
+        <div class="col-md-1">
+          <button mat-mini-fab style="background-color:rgb(173, 173, 106)" (click)="enableEdit(video)" matTooltip="Edit" matTooltipClass="toolTip">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="col-md-1">
+          <button mat-mini-fab style="background-color:rgb(228, 63, 63)"  (click)="deleteVideo(video.id)" matTooltip="Delete" matTooltipClass="toolTip">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div class="col-md-1">
+          <button mat-mini-fab style="background-color:green" (click)="approveVideo(video)" matTooltip="Approve" matTooltipClass="toolTip">
+            <mat-icon>done_outline</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card>
   </div>
   <div class="col-md-1">
   </div>
