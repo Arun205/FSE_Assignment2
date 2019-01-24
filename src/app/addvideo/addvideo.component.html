@@ -39,13 +39,13 @@
         </div>
         <div class="col-md-4">
           <input *ngIf="video.edit" class="darkfont" placeholder="Title of the video" [(ngModel)]="video.title">
-          <div *ngIf="!video.edit" style="font-size: 14px">
+          <div *ngIf="!video.edit" style="font-size: 20px">
             {{video.title}}
           </div>
         </div>
         <div class="col-md-4">
           <input *ngIf="video.edit" type="url" class="darkfont" placeholder="Url of the video" [(ngModel)]="video.url">
-          <div *ngIf="!video.edit" style="font-size: 12px" (click)="validateVideo(video)">
+          <div *ngIf="!video.edit" style="font-size: 14px" (click)="validateVideo(video)">
             <a [attr.href]="video.url" target="_blank" class="lightfont">{{video.url}}</a>
           </div>
         </div>
@@ -72,7 +72,7 @@
           </button>
         </div>
         <div class="col-md-1">
-          <button mat-mini-fab style="background-color:red"  (click)="deleteVideo(video.id)" matTooltip="Delete" matTooltipClass="toolTip">
+          <button mat-mini-fab style="background-color:rgb(228, 63, 63)"  (click)="deleteVideo(video.id)" matTooltip="Delete" matTooltipClass="toolTip">
             <mat-icon>delete</mat-icon>
           </button>
         </div>

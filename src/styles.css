@@ -43,3 +43,7 @@
 .toolTip{
     background-color: #3a9b7e;
 }
+
+.snackbarinfo .mat-simple-snackbar {
+    justify-content: center;
+}
