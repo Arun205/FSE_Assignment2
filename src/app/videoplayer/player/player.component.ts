@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Dataservice } from '../dataservice.service';
 
 @Component({
   selector: 'app-player',
@@ -7,7 +8,9 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
 
+  @Input() controlsEvent;
   player: any;
+  i = 0;
 
   constructor() { }
 
@@ -25,18 +28,28 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         height: '500px',
         width: '100%',
         videoId: 'hHMyZR87VvQ',
-        playerVars: { 'autoplay': 0, 'rel': 0, 'controls': 2 },
+        playerVars: { 'autoplay': 0, 'rel': 0, 'controls': 0 },
         events: {
           'onReady': (event) => {
             console.log('Player is ready');
           },
           'onStateChange': (event) => {
+            this.stateChanged();
           }
         }
       });
     };
 
-    console.log('ngOnInit');
+  }
+
+  stateChanged() {
+    console.log('state changed');
+    this.i = this.i + 1;
+    console.log(this.i);
+    this.player.setVolume(0);
+    if ( this.i == 5) {
+      this.player.setVolume(100);
+    }
   }
 
 }

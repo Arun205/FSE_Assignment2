@@ -1,10 +1,11 @@
 <div class="row">
   <div class="col">
-    <app-player></app-player>
-    <app-controls></app-controls>
+    <app-player [controlsEvent]></app-player>
+    <app-controls (controlsEvent)="controlsEvent=$event"></app-controls>
   </div>
   <div class="col">
     <app-playlist></app-playlist>
   </div>
 </div>
+<div (onChange)>conrols {{controlsEvent}}</div>
 

@@ -8,6 +8,7 @@ import { MatButtonModule, MatTooltipModule, MatIconModule, MatInputModule, MatFo
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { VideoplayerComponent } from './videoplayer/videoplayer.component';
+import { Dataservice } from './videoplayer/dataservice.service';
 import { PlayerComponent } from './videoplayer/player/player.component';
 import { ControlsComponent } from './videoplayer/controls/controls.component';
 import { PlaylistComponent } from './videoplayer/playlist/playlist.component';
@@ -38,7 +39,7 @@ import { HeaderComponent } from './header/header.component';
     MatDividerModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [Dataservice],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

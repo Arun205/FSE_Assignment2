@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VideoplayerComponent implements OnInit {
 
+  public controlsEvent: string;
+
   constructor() { }
 
   ngOnInit() {
