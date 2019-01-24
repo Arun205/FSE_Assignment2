@@ -11,6 +11,8 @@ export class ControlsComponent implements OnInit {
   @Output() controlsEvent = new EventEmitter;
   public muted = false;
   public disablePause = true;
+  public like = 0;
+  public dislike = 0;
 
   constructor(private dataservice: Dataservice) { }
 
@@ -34,6 +36,12 @@ export class ControlsComponent implements OnInit {
     }
     if (action == 'reload') {
       this.disablePause = false;
+    }
+    if (action == 'like') {
+      this.like = this.like + 1;
+    }
+    if (action == 'dislike') {
+      this.dislike = this.dislike + 1;
     }
   }
 
