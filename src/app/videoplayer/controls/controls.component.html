@@ -1,30 +1,48 @@
 <div class="row" style="font-size: 30px; color:rgb(69, 104, 145)">
     <div class="col" ngbTooltip="play">
-      <span id="play" placement="bottom" class="glyphicon glyphicon-play" (click)="controls('play')"></span>
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Play" matTooltipClass="toolTip" (click)="controls('play')">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
     </div>
     <div class="col">
-      <span id="pause" class="glyphicon glyphicon-pause" style="color:rgb(107, 154, 207)" (click)="controls('pause')"></span>
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Pause" matTooltipClass="toolTip" (click)="controls('pause')">
+        <mat-icon>pause</mat-icon>
+      </button>
     </div>
     <div class="col">
-      <span id="stop" class="glyphicon glyphicon-stop" (click)="controls('stop')"></span>
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Stop" matTooltipClass="toolTip" (click)="controls('stop')">
+        <mat-icon>stop</mat-icon>
+      </button>
     </div>
     <div class="col">
-      <span class="glyphicon glyphicon-arrow-down" (click)="controls('volumedown')"></span>
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Volume Up" matTooltipClass="toolTip" (click)="controls('volumeup')">
+        <mat-icon>volume_up</mat-icon>
+      </button>
     </div>
     <div class="col">
-      <span class="glyphicon glyphicon-arrow-up" (click)="controls('volumeup')"></span>
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Volume Down" matTooltipClass="toolTip" (click)="controls('volumedown')">
+        <mat-icon>volume_down</mat-icon>
+      </button>
     </div>
     <div class="col">
-      <span id="togglemute" class="glyphicon glyphicon-volume-off" (click)="controls('togglemute')"></span>
-    </div>
-    <div id="volumeon" class="col">
-      <span class="glyphicon glyphicon-repeat" (click)="controls('reload')"></span>
-    </div>
-    <div class="col">
-      <span id="like" class="glyphicon glyphicon-thumbs-up" (click)="controls('like')"></span>
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Mute" matTooltipClass="toolTip" (click)="controls('mute')">
+        <mat-icon>volume_off</mat-icon>
+      </button>
     </div>
     <div class="col">
-      <span id="dislike" class="glyphicon glyphicon-thumbs-down" (click)="controls('dislike')"></span>
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Replay" matTooltipClass="toolTip" (click)="controls('reload')">
+        <mat-icon>replay</mat-icon>
+      </button>
+    </div>
+    <div class="col">
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Replay" matTooltipClass="toolTip" (click)="controls('like')">
+        <mat-icon>thumb_up</mat-icon>
+      </button>
+    </div>
+    <div class="col">
+      <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Replay" matTooltipClass="toolTip" (click)="controls('dislike')">
+        <mat-icon>thumb_down</mat-icon>
+      </button>
     </div>
   </div>
 
