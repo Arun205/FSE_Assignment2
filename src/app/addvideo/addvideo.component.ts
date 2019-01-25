@@ -32,6 +32,12 @@ export class AddvideoComponent implements OnInit {
   constructor(private http: Http, private snackBar: MatSnackBar)  { }
 
   ngOnInit() {
+    this.http.get("https://homepages.cae.wisc.edu/~ece533/images/cat.png")
+    .toPromise()
+    .then((res) => res.blob())
+    .then((data) => {
+      console.log('thumbnail');
+    });
     this.getVideodata();
   }
 
