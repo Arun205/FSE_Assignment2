@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./videoplayer.component.css']
 })
 export class VideoplayerComponent implements OnInit {
-
   public controlsEvent: string;
 
-  constructor() { 
+  constructor() {
   }
 
   ngOnInit() {

@@ -1,5 +1,8 @@
+<div style="font-size: 24px; margin-left: 15px"><strong>Upcoming Videos</strong></div>
 <mat-card *ngFor="let video of videos" class="bgcolor lightfont" style="margin-bottom: 15px; margin-right:15px">
   <div style="font-size: 24px">
+    <img [src]="imagepath">
+    <!-- <img src="https://img.youtube.com/vi/hHMyZR87VvQ/default.jpg"> -->
     {{video.title}}
   </div>
 </mat-card>

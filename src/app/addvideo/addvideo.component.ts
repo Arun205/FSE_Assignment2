@@ -32,12 +32,6 @@ export class AddvideoComponent implements OnInit {
   constructor(private http: Http, private snackBar: MatSnackBar)  { }
 
   ngOnInit() {
-    this.http.get("https://homepages.cae.wisc.edu/~ece533/images/cat.png")
-    .toPromise()
-    .then((res) => res.blob())
-    .then((data) => {
-      console.log('thumbnail');
-    });
     this.getVideodata();
   }
 
@@ -67,7 +61,7 @@ export class AddvideoComponent implements OnInit {
       newVideo.status = 'Validation Pending';
       newVideo.approved = false;
       newVideo.likes = 0;
-      newVideo.unlikes = 0;
+      newVideo.dislikes = 0;
       newVideo.currentStatus = '';
       newVideo.exitTime = 0;
       newVideo.edit = false;

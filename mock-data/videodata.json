@@ -1,49 +1,13 @@
 {
   "dataservice": [
     {
-      "id": 4,
+      "id": 1,
       "title": "test",
-      "url": "https://youtu.be/hHMyZR87VvQ",
+      "url": "hHMyZR87VvQ",
       "status": "Approved",
       "approved": false,
       "likes": 0,
-      "unlikes": 0,
-      "currentStatus": "",
-      "exitTime": 0,
-      "edit": false
-    },
-    {
-      "id": 5,
-      "title": "testte",
-      "url": "st",
-      "status": "Approved",
-      "approved": false,
-      "likes": 0,
-      "unlikes": 0,
-      "currentStatus": "",
-      "exitTime": 0,
-      "edit": false
-    },
-    {
-      "id": 7,
-      "title": "GOOGLE",
-      "url": "https://google.com",
-      "status": "Validation Pending",
-      "approved": false,
-      "likes": 0,
-      "unlikes": 0,
-      "currentStatus": "",
-      "exitTime": 0,
-      "edit": false
-    },
-    {
-      "id": 8,
-      "title": "google",
-      "url": "https://google.com",
-      "status": "Approved",
-      "approved": false,
-      "likes": 0,
-      "unlikes": 0,
+      "dislikes": 0,
       "currentStatus": "",
       "exitTime": 0,
       "edit": false
