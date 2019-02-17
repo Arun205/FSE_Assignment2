@@ -1,7 +1,8 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ElementRef, Renderer2 } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { Dataservice } from '../dataservice.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-player',
@@ -15,7 +16,8 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   player: any;
   muted = false;
 
-  constructor(private dataservice: Dataservice, private snackBar: MatSnackBar) {
+  constructor(private dataservice: Dataservice, private snackBar: MatSnackBar,
+    private elementRef: ElementRef, private renderer: Renderer2) {
     this.dataSubscription = this.dataservice.sharedDataEmitter.subscribe((data: any) => {
       console.log(data);
       this.controls(data);
@@ -36,16 +38,40 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         height: '100%',
         width: '100%',
         videoId: 'hHMyZR87VvQ',
-        playerVars: { 'autoplay': 0, 'rel': 0, 'controls': 0 }
-      })
-    },0);
+        playerVars: { 'autoplay': 0, 'rel': 0, 'controls': 0, 'enablejsapi': 1 }
+      });
+    }, 0);
 
+    // this.elementRef.nativeElement.querySelector('#ytPlayer').listen(this.elementRef.nativeElement, 'click', (event) => {
+    //   console.log('clicked');
+    // });
+    const that = this;
+    $(document).ready(function() {
+      $(document).click(function() {
+        console.log('jquery');
+        that.onVideoControls();
+      });
+      // $('#ytPlayer').click(function() {
+      //   console.log('jquery');
+      // });
+    });
   }
 
-  controls(action) {
+  onVideoControls() {
+    const state = this.player.getPlayerState();
+    console.log('num', state);
+    if (state == 1) {
+      console.log('playing');
+    }
+    if (state == 2) {
+      console.log('paused');
+    }
+  }
+
+  controls (action: any) {
     let currentVolume = 0;
-    let volume = 0
-    switch(action) {
+    let volume = 0;
+    switch (action) {
       case 'play':
         this.player.playVideo();
         this.openSnackBar('Video Playing');
