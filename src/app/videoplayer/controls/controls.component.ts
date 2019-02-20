@@ -19,12 +19,17 @@ export class ControlsComponent implements OnInit {
   public like = 0;
   public dislike = 0;
   public videos: any;
+  public onScreenAction = false;
 
   constructor(private dataservice: Dataservice, private http: Http) {
     this.dataSubscription = this.dataservice.sharedDataEmitter.subscribe((sharedData: SharedData) => {
       console.log(sharedData);
       if (sharedData.videoDataLoaded == true) {
         this.getLikesDislikes();
+      }
+      if (sharedData.onScreenAction) {
+        this.onScreenAction = true;
+        this.controls(sharedData.action);
       }
     });
    }
@@ -34,15 +39,25 @@ export class ControlsComponent implements OnInit {
 
   getLikesDislikes() {
     this.videos = JSON.parse(localStorage.getItem('videos'));
-    this.like = this.videos[0].likes;
-    this.dislike = this.videos[0].dislikes;
+    const currentVideo = localStorage.getItem('currentVideo');
+    this.like = this.videos[currentVideo].likes;
+    this.dislike = this.videos[currentVideo].dislikes;
+    console.log('currentRow', currentVideo);
+    console.log('like', this.videos[currentVideo].likes);
   }
 
   controls(action) {
-    const sharedData: SharedData = new SharedData();
-    sharedData.action = action;
-    this.dataservice.setSharedData(sharedData);
-    this.dataservice.sharedDataEmitter.emit(sharedData);
+    if (!this.onScreenAction) {
+      const sharedData: SharedData = new SharedData();
+      sharedData.action = action;
+      this.dataservice.setSharedData(sharedData);
+      this.dataservice.sharedDataEmitter.emit(sharedData);
+    }
+
+    if (this.onScreenAction) {
+      this.onScreenAction = false;
+    }
+
     if (action == 'togglemute') {
       this.muted = !this.muted;
     }
@@ -62,16 +77,27 @@ export class ControlsComponent implements OnInit {
       this.like = this.like + 1;
       this.videos = JSON.parse(localStorage.getItem('videos'));
       const currentVideo = localStorage.getItem('currentVideo');
+      this.videos[currentVideo].dislikes = this.dislike;
       this.videos[currentVideo].likes = this.like;
       const options = new RequestOptions;
-      this.http.post(this.editvideos_url, this.videos[currentVideo], options);
-      // .toPromise()
-      // .then((res) => res.json())
-      // .then((data) => {
-      // });
+      this.http.put(this.editvideos_url + '/' + this.videos[currentVideo].id + '/', this.videos[currentVideo], options)
+      .toPromise()
+      .then((res) => res.json())
+      .then((data) => {
+      });
     }
     if (action == 'dislike') {
       this.dislike = this.dislike + 1;
+      this.videos = JSON.parse(localStorage.getItem('videos'));
+      const currentVideo = localStorage.getItem('currentVideo');
+      this.videos[currentVideo].likes = this.like;
+      this.videos[currentVideo].dislikes = this.dislike;
+      const options = new RequestOptions;
+      this.http.put(this.editvideos_url + '/' + this.videos[currentVideo].id + '/', this.videos[currentVideo], options)
+      .toPromise()
+      .then((res) => res.json())
+      .then((data) => {
+      });
     }
   }
 

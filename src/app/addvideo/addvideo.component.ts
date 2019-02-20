@@ -57,7 +57,7 @@ export class AddvideoComponent implements OnInit {
         newVideo.id = this.videos[this.videos.length - 1].id + 1;
       }
       newVideo.title = this.newvideotitle;
-      newVideo.url = this.newvideoid;
+      newVideo.url = 'https://youtube.com/watch?v=' + this.newvideoid;
       newVideo.status = 'Validation Pending';
       newVideo.approved = false;
       newVideo.likes = 0;

@@ -9,4 +9,5 @@ export class VideoData {
     currentStatus: string;
     exitTime: number;
     edit: boolean;
+    thumbnailurl: string;
 }

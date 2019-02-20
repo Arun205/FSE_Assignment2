@@ -1,0 +1,8 @@
+.playlistcard {
+    margin-bottom: 15px; 
+    margin-right: 15px
+}
+
+.currentVideo {
+    background-color: #e83e8c;
+}

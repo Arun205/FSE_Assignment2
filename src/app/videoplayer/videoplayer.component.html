@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8">
-    <div style="font-size: 24px; margin-left: 15px"><strong>Title of the Video</strong></div>
+    <div style="font-size: 24px; margin-left: 30px"><strong>Title of the Video</strong></div>
     <app-player [controlsEvent]></app-player>
     <app-controls (controlsEvent)="controlsEvent=$event"></app-controls>
   </div>
@@ -8,4 +8,9 @@
     <app-playlist></app-playlist>
   </div>
 </div>
+<span class="float" routerLink="/addvideo">
+  <button mat-fab matTooltip="Add a video" matTooltipClass="toolTip">
+      <mat-icon class="float-icon">video_call</mat-icon>
+    </button>
+</span>
 
