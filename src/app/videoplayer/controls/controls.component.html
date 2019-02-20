@@ -43,16 +43,12 @@
       <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Like" matTooltipClass="toolTip" (click)="controls('like')">
         <mat-icon>thumb_up</mat-icon>
       </button>
+      <span id="like" style="position: absolute; font-size: 18px">{{like}}</span>
     </div>
     <div class="col">
       <button mat-mini-fab style="background-color:rgb(207, 207, 197); color: rgb(69, 104, 145)" matTooltip="Dislike" matTooltipClass="toolTip" (click)="controls('dislike')">
         <mat-icon>thumb_down</mat-icon>
       </button>
+      <span id="dislike" style="position: absolute; font-size: 18px">{{dislike}}</span>
     </div>
   </div>
-
-  <span class="float" routerLink="/addvideo">
-    <button mat-fab matTooltip="Add a video" matTooltipClass="toolTip">
-        <mat-icon class="float-icon">video_call</mat-icon>
-      </button>
-  </span>

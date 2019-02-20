@@ -27,7 +27,7 @@ export class AddvideoComponent implements OnInit {
   public editEnabled = false;
   public showVideoList = false;
   public newvideotitle = '';
-  public newvideourl = '';
+  public newvideoid = '';
 
   constructor(private http: Http, private snackBar: MatSnackBar)  { }
 
@@ -57,11 +57,11 @@ export class AddvideoComponent implements OnInit {
         newVideo.id = this.videos[this.videos.length - 1].id + 1;
       }
       newVideo.title = this.newvideotitle;
-      newVideo.url = this.newvideourl;
+      newVideo.url = 'https://youtube.com/watch?v=' + this.newvideoid;
       newVideo.status = 'Validation Pending';
       newVideo.approved = false;
       newVideo.likes = 0;
-      newVideo.unlikes = 0;
+      newVideo.dislikes = 0;
       newVideo.currentStatus = '';
       newVideo.exitTime = 0;
       newVideo.edit = false;
@@ -73,12 +73,12 @@ export class AddvideoComponent implements OnInit {
       });
       this.openSnackBar('Video Added!');
       this.newvideotitle = '';
-      this.newvideourl = '';
+      this.newvideoid = '';
     }
   }
 
   validation() {
-    if (this.newvideotitle.trim().length == 0 && this.newvideourl.trim().length == 0) {
+    if (this.newvideotitle.trim().length == 0 && this.newvideoid.trim().length == 0) {
       this.openSnackBar('Video title and url cannot left blank');
       return false;
     }
@@ -87,7 +87,7 @@ export class AddvideoComponent implements OnInit {
         this.openSnackBar('Video title cannot left blank');
         return false;
       }
-      if (this.newvideourl.trim().length == 0) {
+      if (this.newvideoid.trim().length == 0) {
         this.openSnackBar('Video url cannot left blank');
         return false;
       }
