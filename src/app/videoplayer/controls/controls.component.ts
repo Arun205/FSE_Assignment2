@@ -42,8 +42,6 @@ export class ControlsComponent implements OnInit {
     const currentVideo = localStorage.getItem('currentVideo');
     this.like = this.videos[currentVideo].likes;
     this.dislike = this.videos[currentVideo].dislikes;
-    console.log('currentRow', currentVideo);
-    console.log('like', this.videos[currentVideo].likes);
   }
 
   controls(action) {
@@ -79,6 +77,8 @@ export class ControlsComponent implements OnInit {
       const currentVideo = localStorage.getItem('currentVideo');
       this.videos[currentVideo].dislikes = this.dislike;
       this.videos[currentVideo].likes = this.like;
+      localStorage.removeItem('videos');
+      localStorage.setItem('videos', JSON.stringify(this.videos));
       const options = new RequestOptions;
       this.http.put(this.editvideos_url + '/' + this.videos[currentVideo].id + '/', this.videos[currentVideo], options)
       .toPromise()
@@ -92,6 +92,8 @@ export class ControlsComponent implements OnInit {
       const currentVideo = localStorage.getItem('currentVideo');
       this.videos[currentVideo].likes = this.like;
       this.videos[currentVideo].dislikes = this.dislike;
+      localStorage.removeItem('videos');
+      localStorage.setItem('videos', JSON.stringify(this.videos));
       const options = new RequestOptions;
       this.http.put(this.editvideos_url + '/' + this.videos[currentVideo].id + '/', this.videos[currentVideo], options)
       .toPromise()

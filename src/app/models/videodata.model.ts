@@ -10,4 +10,5 @@ export class VideoData {
     exitTime: number;
     edit: boolean;
     thumbnailurl: string;
+    lastPlayed: boolean;
 }

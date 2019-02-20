@@ -1,1 +1,2 @@
 <div #ytPlayer id="ytPlayer" style="margin-left: 30px; height: 390px; width: 640px"></div>
+<mat-slider [(ngModel)]='currentTime' min=0 max=100 (change)="sliderChanged()" style="margin-left: 30px; width: 640px !important"></mat-slider>
