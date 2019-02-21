@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatTooltipModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDividerModule,
-  MatCardModule, MatSnackBarModule } from '@angular/material';
+  MatCardModule, MatSnackBarModule, MatProgressBarModule, MatSliderModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -39,7 +39,9 @@ import { HeaderComponent } from './header/header.component';
     MatFormFieldModule,
     MatDividerModule,
     MatCardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

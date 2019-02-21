@@ -1,9 +1,10 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Subscription } from 'rxjs';
+import { timer } from 'rxjs';
+import { Http, RequestOptions } from '@angular/http';
 import { Dataservice } from '../dataservice.service';
 import { SharedData } from './../../models/shareddata.model';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-player',
@@ -13,6 +14,7 @@ import * as $ from 'jquery';
 export class PlayerComponent implements OnInit, AfterViewInit {
 
   @Input() controlsEvent;
+  public editvideos_url = 'http://localhost:3000/dataservice';
   dataSubscription: Subscription;
   player: any;
   videos: any;
@@ -21,10 +23,16 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   videoId = '';
   prevVideoId = '';
   changedVideo: boolean;
+  currentTime = 0;
+  videoDuration = 0;
+  videoPlaying = false;
+  playedTime = 0;
+  videoTimer = timer(0, 1000);
+  resumeTime = 0;
+  holdCurrentTime = 0;
 
-  constructor(private dataservice: Dataservice, private snackBar: MatSnackBar) {
+  constructor(private dataservice: Dataservice, private snackBar: MatSnackBar, private http: Http) {
     this.dataSubscription = this.dataservice.sharedDataEmitter.subscribe((sharedData: SharedData) => {
-      console.log(sharedData);
       if (sharedData.action && this.prevAction != sharedData.action) {
         this.controls(sharedData.action);
         this.prevAction = sharedData.action;
@@ -36,6 +44,8 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         this.videoId = (this.videos[currVideoId].url).slice(ytbaseurl.length);
         if (this.videoId != this.prevVideoId && !sharedData.videoChanged) {
           this.loadVideo();
+          const currVideo = localStorage.getItem('currentVideo');
+          this.currentTime = this.videos[currVideo].exitTime;
         }
         if (this.videoId != this.prevVideoId && sharedData.videoChanged) {
           this.changedVideo = sharedData.videoChanged;
@@ -55,16 +65,20 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // const that = this;
-    // $(document).ready(function() {
-    //   $(document).click(function() {
-    //     // that.onVideoControls();
-    //   });
-    // });
+    const subscribe = this.videoTimer.subscribe(val => {
+      if (this.videoPlaying) {
+        this.resumeTime = this.resumeTime + 1;
+        this.currentTime = this.resumeTime / this.videoDuration * 100;
+      }
+    });
   }
 
+  sliderChanged() {
+    const seekTime = this.currentTime / 100 * this.videoDuration;
+    this.player.seekTo(seekTime);
+    this.resumeTime = seekTime;
+  }
   loadVideo() {
-    console.log('loadVideo');
     setTimeout((<any>window).onYouTubeIframeAPIReady = () => {
       this.player = new (<any>window).YT.Player('ytPlayer', {
         videoId: this.videoId,
@@ -82,17 +96,23 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   videoChanged() {
-    console.log('videochanged');
     const elapsedTime = this.player.getCurrentTime();
     console.log('elaplsed Time', elapsedTime);
     this.videos = JSON.parse(localStorage.getItem('videos'));
     const prevVideo = localStorage.getItem('prevVideo');
     const currentVideo = localStorage.getItem('currentVideo');
-    const resumeTime = this.videos[currentVideo].exitTime;
+    this.resumeTime = this.videos[currentVideo].exitTime;
     this.videos[prevVideo].exitTime = elapsedTime;
     localStorage.removeItem('videos');
     localStorage.setItem('videos', JSON.stringify(this.videos));
-    this.player.cueVideoById({videoId: this.videoId, startSeconds: resumeTime});
+    console.log('prev ', this.videos[prevVideo]);
+    const options = new RequestOptions;
+      this.http.put(this.editvideos_url + '/' + this.videos[prevVideo].id + '/', this.videos[prevVideo], options)
+      .toPromise()
+      .then((res) => res.json())
+      .then((data) => {
+      });
+    this.player.cueVideoById({videoId: this.videoId, startSeconds: this.resumeTime});
     this.player.playVideo();
   }
 
@@ -106,8 +126,12 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       const state = this.player.getPlayerState();
       console.log('state' , state);
       if (state == 1) {
+        this.videoPlaying = true;
         console.log('playing');
+        this.videoDuration = this.player.getDuration();
         action = 'play';
+      } else {
+        this.videoPlaying = false;
       }
       if (state == 2) {
         console.log('paused');
